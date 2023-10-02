@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; operator  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Payload Image" href="PAYLOAD_IMAGE.html" />
+    <link rel="prev" title="Welcome to operator’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            operator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploy-the-operator">Deploy the Operator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#custom-resource-definition-crd">Custom Resource Definition (CRD)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#create-custom-resource-cr">Create Custom Resource (CR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#verify">Verify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changing-runtime-bundle">Changing Runtime bundle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#delete-the-cr">Delete the CR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delete-the-operator">Delete the Operator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="PAYLOAD_IMAGE.html">Payload Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT.html">Development</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">operator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/INSTALL.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Ensure a minimum of 8GB RAM and 2 vCPU for the Kubernetes cluster node</p></li>
+<li><p>Only containerd runtime based Kubernetes clusters are supported with the current Confidential Containers (CoCo) release</p></li>
+<li><p>The minimum Kubernetes version should be 1.24.</p></li>
+<li><p>Ensure KUBECONFIG points to the target Kubernetes cluster.</p></li>
+<li><p>Ensure at least one Kubernetes node in the cluster is having the label <code class="docutils literal notranslate"><span class="pre">node.kubernetes.io/worker=</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>kubectl label node $NODENAME node.kubernetes.io/worker=
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="deploy-the-operator">
+<h2>Deploy the Operator<a class="headerlink" href="#deploy-the-operator" title="Link to this heading"></a></h2>
+<p>Deploy the operator by running the following command where <code class="docutils literal notranslate"><span class="pre">&lt;RELEASE_VERSION&gt;</span></code> needs to be substituted with the desired <a class="reference external" href="https://github.com/confidential-containers/operator/tags">release tag</a>. For example, to deploy the <code class="docutils literal notranslate"><span class="pre">v0.2.0</span></code> release run: <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">RELEASE_VERSION=&quot;v0.2.0&quot;</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">RELEASE_VERSION</span><span class="o">=&lt;</span><span class="n">RELEASE_VERSION</span><span class="o">&gt;</span>
+<span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">k</span> <span class="s2">&quot;github.com/confidential-containers/operator/config/release?ref=$</span><span class="si">{RELEASE_VERSION}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>The operator deploys all resources under <code class="docutils literal notranslate"><span class="pre">confidential-containers-system</span></code> namespace.</p>
+<p>Wait until each pod has the STATUS of Running.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">-</span><span class="n">n</span> <span class="n">confidential</span><span class="o">-</span><span class="n">containers</span><span class="o">-</span><span class="n">system</span> <span class="o">--</span><span class="n">watch</span>
+</pre></div>
+</div>
+<section id="custom-resource-definition-crd">
+<h3>Custom Resource Definition (CRD)<a class="headerlink" href="#custom-resource-definition-crd" title="Link to this heading"></a></h3>
+<p>The operator is responsible for creating the custom resource definition (CRD) which is
+then used for creating a custom resource (CR).</p>
+<p>The operator creates the <code class="docutils literal notranslate"><span class="pre">ccruntime</span></code> CRD as can be observed in the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">crd</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">ccruntime</span>
+
+<span class="n">ccruntimes</span><span class="o">.</span><span class="n">confidentialcontainers</span><span class="o">.</span><span class="n">org</span>   <span class="mi">2022</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">08</span><span class="n">T06</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mi">37</span><span class="n">Z</span>
+</pre></div>
+</div>
+<p>Execute the following command to get details on the <code class="docutils literal notranslate"><span class="pre">ccruntime</span></code> CRD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">explain</span> <span class="n">ccruntimes</span><span class="o">.</span><span class="n">confidentialcontainers</span><span class="o">.</span><span class="n">org</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KIND</span><span class="p">:</span>     <span class="n">CcRuntime</span>
+<span class="n">VERSION</span><span class="p">:</span>  <span class="n">confidentialcontainers</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">v1beta1</span>
+
+<span class="n">DESCRIPTION</span><span class="p">:</span>
+     <span class="n">CcRuntime</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">Schema</span> <span class="k">for</span> <span class="n">the</span> <span class="n">ccruntimes</span> <span class="n">API</span>
+
+<span class="n">FIELDS</span><span class="p">:</span>
+   <span class="n">apiVersion</span>	<span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+     <span class="n">APIVersion</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">versioned</span> <span class="n">schema</span> <span class="n">of</span> <span class="n">this</span> <span class="n">representation</span> <span class="n">of</span> <span class="n">an</span>
+     <span class="nb">object</span><span class="o">.</span> <span class="n">Servers</span> <span class="n">should</span> <span class="n">convert</span> <span class="n">recognized</span> <span class="n">schemas</span> <span class="n">to</span> <span class="n">the</span> <span class="n">latest</span> <span class="n">internal</span>
+     <span class="n">value</span><span class="p">,</span> <span class="ow">and</span> <span class="n">may</span> <span class="n">reject</span> <span class="n">unrecognized</span> <span class="n">values</span><span class="o">.</span> <span class="n">More</span> <span class="n">info</span><span class="p">:</span>
+     <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">community</span><span class="o">/</span><span class="n">contributors</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sig</span><span class="o">-</span><span class="n">architecture</span><span class="o">/</span><span class="n">api</span><span class="o">-</span><span class="n">conventions</span><span class="o">.</span><span class="n">md</span><span class="c1">#resources</span>
+
+   <span class="n">kind</span>	<span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span>
+     <span class="n">Kind</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">string</span> <span class="n">value</span> <span class="n">representing</span> <span class="n">the</span> <span class="n">REST</span> <span class="n">resource</span> <span class="n">this</span> <span class="nb">object</span>
+     <span class="n">represents</span><span class="o">.</span> <span class="n">Servers</span> <span class="n">may</span> <span class="n">infer</span> <span class="n">this</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">endpoint</span> <span class="n">the</span> <span class="n">client</span> <span class="n">submits</span>
+     <span class="n">requests</span> <span class="n">to</span><span class="o">.</span> <span class="n">Cannot</span> <span class="n">be</span> <span class="n">updated</span><span class="o">.</span> <span class="n">In</span> <span class="n">CamelCase</span><span class="o">.</span> <span class="n">More</span> <span class="n">info</span><span class="p">:</span>
+     <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">community</span><span class="o">/</span><span class="n">contributors</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sig</span><span class="o">-</span><span class="n">architecture</span><span class="o">/</span><span class="n">api</span><span class="o">-</span><span class="n">conventions</span><span class="o">.</span><span class="n">md</span><span class="c1">#types-kinds</span>
+
+   <span class="n">metadata</span>	<span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span>
+     <span class="n">Standard</span> <span class="nb">object</span><span class="s1">&#39;s metadata. More info:</span>
+     <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">k8s</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">community</span><span class="o">/</span><span class="n">contributors</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">sig</span><span class="o">-</span><span class="n">architecture</span><span class="o">/</span><span class="n">api</span><span class="o">-</span><span class="n">conventions</span><span class="o">.</span><span class="n">md</span><span class="c1">#metadata</span>
+
+   <span class="n">spec</span>	<span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span>
+     <span class="n">CcRuntimeSpec</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">desired</span> <span class="n">state</span> <span class="n">of</span> <span class="n">CcRuntime</span>
+
+   <span class="n">status</span>	<span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span>
+     <span class="n">CcRuntimeStatus</span> <span class="n">defines</span> <span class="n">the</span> <span class="n">observed</span> <span class="n">state</span> <span class="n">of</span> <span class="n">CcRuntime</span>
+</pre></div>
+</div>
+<p>The complete CRD can be seen by running the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">explain</span> <span class="o">--</span><span class="n">recursive</span><span class="o">=</span><span class="n">true</span> <span class="n">ccruntimes</span><span class="o">.</span><span class="n">confidentialcontainers</span><span class="o">.</span><span class="n">org</span>
+</pre></div>
+</div>
+<p>You can also see the details of the <code class="docutils literal notranslate"><span class="pre">ccruntime</span></code> CRD in the following <a class="reference external" href="https://github.com/confidential-containers/operator/blob/main/api/v1beta1/ccruntime_types.go#L90">file</a>.</p>
+</section>
+</section>
+<section id="create-custom-resource-cr">
+<h2>Create Custom Resource (CR)<a class="headerlink" href="#create-custom-resource-cr" title="Link to this heading"></a></h2>
+<p>Creating a custom resource installs the required CC runtime pieces into the cluster node and creates the RuntimeClasses.</p>
+<p>The default CR can be created as shown below where <code class="docutils literal notranslate"><span class="pre">&lt;RELEASE_VERSION&gt;</span></code> needs to be substituted with the
+desired <a class="reference external" href="https://github.com/confidential-containers/operator/tags">release tag</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>kubectl apply -k github.com/confidential-containers/operator/config/samples/ccruntime/default?ref=&lt;RELEASE_VERSION&gt;
+</pre></div>
+</div>
+<p>Wait until each pod has the <code class="docutils literal notranslate"><span class="pre">STATUS</span></code> as <code class="docutils literal notranslate"><span class="pre">Running</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">-</span><span class="n">n</span> <span class="n">confidential</span><span class="o">-</span><span class="n">containers</span><span class="o">-</span><span class="n">system</span> <span class="o">--</span><span class="n">watch</span>
+</pre></div>
+</div>
+</section>
+<section id="verify">
+<h2>Verify<a class="headerlink" href="#verify" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Check the status of the operator PODs.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">pods</span> <span class="o">-</span><span class="n">n</span> <span class="n">confidential</span><span class="o">-</span><span class="n">containers</span><span class="o">-</span><span class="n">system</span>
+</pre></div>
+</div>
+<p>A successful install should show <code class="docutils literal notranslate"><span class="pre">STATUS</span></code> field of all pods as <code class="docutils literal notranslate"><span class="pre">Running</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NAME</span>                                              <span class="n">READY</span>   <span class="n">STATUS</span>    <span class="n">RESTARTS</span>   <span class="n">AGE</span>
+<span class="n">cc</span><span class="o">-</span><span class="n">operator</span><span class="o">-</span><span class="n">controller</span><span class="o">-</span><span class="n">manager</span><span class="o">-</span><span class="mi">5</span><span class="n">df7584679</span><span class="o">-</span><span class="n">kffzf</span>   <span class="mi">2</span><span class="o">/</span><span class="mi">2</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">21</span><span class="n">m</span>
+<span class="n">cc</span><span class="o">-</span><span class="n">operator</span><span class="o">-</span><span class="n">daemon</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">xz697</span>                  <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">6</span><span class="n">m45s</span>
+<span class="n">cc</span><span class="o">-</span><span class="n">operator</span><span class="o">-</span><span class="n">pre</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">daemon</span><span class="o">-</span><span class="n">rtdls</span>              <span class="mi">1</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Running</span>   <span class="mi">0</span>          <span class="mi">7</span><span class="n">m2s</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Check <code class="docutils literal notranslate"><span class="pre">RuntimeClasses</span></code></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">runtimeclass</span>
+</pre></div>
+</div>
+<p>A successful install should show the following <code class="docutils literal notranslate"><span class="pre">RuntimeClasses</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NAME</span>            <span class="n">HANDLER</span>         <span class="n">AGE</span>
+<span class="n">kata</span>            <span class="n">kata</span>            <span class="mi">9</span><span class="n">m55s</span>
+<span class="n">kata</span><span class="o">-</span><span class="n">clh</span>        <span class="n">kata</span><span class="o">-</span><span class="n">clh</span>        <span class="mi">9</span><span class="n">m55s</span>
+<span class="n">kata</span><span class="o">-</span><span class="n">clh</span><span class="o">-</span><span class="n">tdx</span>    <span class="n">kata</span><span class="o">-</span><span class="n">clh</span><span class="o">-</span><span class="n">tdx</span>    <span class="mi">9</span><span class="n">m55s</span>
+<span class="n">kata</span><span class="o">-</span><span class="n">qemu</span>       <span class="n">kata</span><span class="o">-</span><span class="n">qemu</span>       <span class="mi">9</span><span class="n">m55s</span>
+<span class="n">kata</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="n">tdx</span>   <span class="n">kata</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="n">tdx</span>   <span class="mi">9</span><span class="n">m55s</span>
+<span class="n">kata</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="n">sev</span>   <span class="n">kata</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="n">sev</span>   <span class="mi">9</span><span class="n">m55s</span>
+<span class="n">kata</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="n">snp</span>   <span class="n">kata</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="n">snp</span>   <span class="mi">9</span><span class="n">m55s</span>
+</pre></div>
+</div>
+</section>
+<section id="changing-runtime-bundle">
+<h2>Changing Runtime bundle<a class="headerlink" href="#changing-runtime-bundle" title="Link to this heading"></a></h2>
+<p>You can change the runtime payload when creating the CR by creating a new <a class="reference external" href="https://kustomize.io">kustomize</a> overlay
+as shown below, where <code class="docutils literal notranslate"><span class="pre">&lt;MY_CUSTOM_CR&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;MY_PAYLOAD&gt;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&lt;TAG&gt;</span></code> needs to be changed according to your payload.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">kustomize</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">r</span> <span class="n">config</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">ccruntime</span><span class="o">/</span><span class="n">default</span> <span class="n">config</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">ccruntime</span><span class="o">/&lt;</span><span class="n">MY_CUSTOM_CR</span><span class="o">&gt;</span>
+<span class="n">cd</span> <span class="n">config</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">ccruntime</span><span class="o">/&lt;</span><span class="n">MY_CUSTOM_CR</span><span class="o">&gt;</span>
+<span class="o">../../../../</span><span class="nb">bin</span><span class="o">/</span><span class="n">kustomize</span> <span class="n">edit</span> <span class="nb">set</span> <span class="n">image</span> <span class="n">quay</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">confidential</span><span class="o">-</span><span class="n">containers</span><span class="o">/</span><span class="n">runtime</span><span class="o">-</span><span class="n">payload</span><span class="o">=&lt;</span><span class="n">MY_PAYLOAD</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">TAG</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Then install the new CR as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">k</span> <span class="n">config</span><span class="o">/</span><span class="n">samples</span><span class="o">/</span><span class="n">ccruntime</span><span class="o">/&lt;</span><span class="n">MY_CUSTOM_CR</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="uninstallation">
+<h2>Uninstallation<a class="headerlink" href="#uninstallation" title="Link to this heading"></a></h2>
+<section id="delete-the-cr">
+<h3>Delete the CR<a class="headerlink" href="#delete-the-cr" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>kubectl delete -k github.com/confidential-containers/operator/config/samples/ccruntime/default?ref=&lt;RELEASE_VERSION&gt;
+</pre></div>
+</div>
+</section>
+<section id="delete-the-operator">
+<h3>Delete the Operator<a class="headerlink" href="#delete-the-operator" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">k</span> <span class="s2">&quot;github.com/confidential-containers/operator/config/release?ref=$</span><span class="si">{RELEASE_VERSION}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to operator’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="PAYLOAD_IMAGE.html" class="btn btn-neutral float-right" title="Payload Image" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, confidential-containers.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
