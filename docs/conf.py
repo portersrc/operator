@@ -14,8 +14,16 @@ author = 'confidential-containers'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "myst_parser"
+    "myst_parser",
+    "sphinx.ext.intersphinx",
 ]
+
+intersphinx_mapping = {
+    #"coco": ("../../../../confidential-containers/docs/_build/html",
+    #         "../../confidential-containers/docs/_build/html/objects.inv"),
+    "coco": ("../..", # relative to repos/operator
+             "../../confidential-containers/docs/_build/html/objects.inv"),
+}
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

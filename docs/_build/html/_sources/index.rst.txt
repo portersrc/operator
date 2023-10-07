@@ -15,6 +15,8 @@ Welcome to operator's documentation!
     Development <DEVELOPMENT>
 
 
+:doc:`Back to Coco Home <coco:index>`
+
 
 Indices and tables
 ==================
