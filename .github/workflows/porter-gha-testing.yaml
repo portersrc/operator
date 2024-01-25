@@ -19,3 +19,9 @@ jobs:
           echo "Start"
           docker --version
           echo "End"
+      - name: build operator
+        run: |
+          docker build -t ghcr.io/portersrc/operator:not-the-latest .
+      - name: push operator
+        run: |
+          docker push ghcr.io/portersrc/operator:not-the-latest
