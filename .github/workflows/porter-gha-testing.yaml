@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "Start"
           docker --version
-          echo "End"
+          echo "Endz"
       - name: build operator
         run: |
           docker build -t ghcr.io/portersrc/operator:not-the-latest .
