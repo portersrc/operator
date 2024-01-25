@@ -1,0 +1,21 @@
+name: Porter GHA Testing
+run-name: ${{ github.actor }} is doing the porter GHA testing
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    #runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Log in to ghcr
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Basic echo and docker version
+        run: |
+          echo "Start"
+          docker --version
+          echo "End"
