@@ -1,0 +1,12 @@
+name: Porter GHA Testing 2
+run-name: ${{ github.actor }} is doing the porter GHA testing 2
+on:
+  pull_request:
+    types:
+      - closed
+jobs:
+  runs-on: ubuntu-latest
+  if: github.event.pull_request.merged == true
+  steps:
+  - run: |
+    echo "porter - The PR was merged"
