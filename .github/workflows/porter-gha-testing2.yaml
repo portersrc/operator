@@ -9,4 +9,4 @@ jobs:
   if: github.event.pull_request.merged == true
   steps:
   - run: |
-    echo "porter - The PR was merged"
+      echo "porter - The PR was merged"
