@@ -17,6 +17,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Basic echo and docker version
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           echo "Start"
           docker --version
