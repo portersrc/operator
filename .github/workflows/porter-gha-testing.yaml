@@ -18,10 +18,15 @@ jobs:
         run: |
           echo "Start"
           docker --version
+          touch some_file.txt
           echo "Endz"
-      - name: build operator
-        run: |
-          docker build -t ghcr.io/portersrc/operator:not-the-latest .
-      - name: push operator
-        run: |
-          docker push ghcr.io/portersrc/operator:not-the-latest
+      - name: upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          path: ./some_file.txt
+      #- name: build operator
+      #  run: |
+      #    docker build -t ghcr.io/portersrc/operator:not-the-latest .
+      #- name: push operator
+      #  run: |
+      #    docker push ghcr.io/portersrc/operator:not-the-latest
