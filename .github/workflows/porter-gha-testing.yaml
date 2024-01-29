@@ -1,6 +1,8 @@
 name: Porter GHA Testing
 run-name: ${{ github.actor }} is doing the porter GHA testing
 on: [push]
+env:
+  PR_NUMBER: ${{ github.event.number }}
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -15,8 +17,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Basic echo and docker version
-        env:
-          PR_NUMBER: ${{ github.event.number }}
         run: |
           echo "Start"
           docker --version
