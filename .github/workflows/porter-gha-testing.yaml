@@ -15,11 +15,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Basic echo and docker version
+        env:
+          PR_NUMBER: ${{ github.event.number }}
         run: |
           echo "Start"
           docker --version
           touch some_file.txt
-          echo "github event number: ${{ github.event.number }}"
+          echo "github event number: ${PR_NUMBER}"
           echo "Endz"
       #- name: upload artifact
       #  uses: actions/upload-artifact@v4
