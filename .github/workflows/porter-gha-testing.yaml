@@ -1,6 +1,8 @@
 name: Porter GHA Testing
 run-name: ${{ github.actor }} is doing the porter GHA testing
 on: [push]
+env:
+  GHCR_IMG_TAGZ=$(gh pr view --json number -q .number).$(git rev-parse --short HEAD)
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -19,15 +21,11 @@ jobs:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           echo "Start"
-          echo "github client for PR nubmer: $(gh pr view --json number -q .number)"
-          echo "git for short sha: $(git rev-parse --short HEAD)"
-          #echo "show me ref: ${{ github.head_ref }}"
-          #echo "show me sha: ${{ github.sha }}"
           WHICH_PR=$(gh pr view --json number -q .number)
           WHICH_COMMIT=$(git rev-parse --short HEAD)
           GHCR_IMG_TAG=${WHICH_PR}.${WHICH_COMMIT}
           echo "my ghcr img tag is: ${GHCR_IMG_TAG}"
-          echo "my ghcr img tag syntax change is: $GHCR_IMG_TAG"
+          echo "my ghcr img tagz is: ${{ env.GHCR_IMG_TAGZ }}"
           echo "End"
       - name: build operator
         run: |
