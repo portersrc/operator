@@ -25,6 +25,8 @@ jobs:
           touch some_file.txt
           echo "github event number: ${PR_NUMBER}"
           echo "the problem is push event: $(gh pr view --json number -q .number)"
+          echo "show me ref: ${{ github.head_ref }}"
+          echo "show me sha: ${{ github.sha }}"
           echo "End"
       #- name: upload artifact
       #  uses: actions/upload-artifact@v4
