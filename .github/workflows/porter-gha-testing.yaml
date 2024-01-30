@@ -25,7 +25,9 @@ jobs:
           #echo "show me sha: ${{ github.sha }}"
           WHICH_PR=$(gh pr view --json number -q .number)
           WHICH_COMMIT=$(git rev-parse --short HEAD)
-          export GHCR_IMG_TAG=${WHICH_PR}.${WHICH_COMMIT}
+          GHCR_IMG_TAG=${WHICH_PR}.${WHICH_COMMIT}
+          echo "my ghcr img tag is: ${GHCR_IMG_TAG}"
+          echo "my ghcr img tag syntax change is: $GHCR_IMG_TAG"
           echo "End"
       - name: build operator
         run: |
