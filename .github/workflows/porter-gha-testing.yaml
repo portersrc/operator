@@ -19,17 +19,19 @@ jobs:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           echo "Start"
-          docker --version
-          touch some_file.txt
           echo "github client for PR nubmer: $(gh pr view --json number -q .number)"
           echo "git for short sha: $(git rev-parse --short HEAD)"
           #echo "show me ref: ${{ github.head_ref }}"
           #echo "show me sha: ${{ github.sha }}"
+          WHICH_PR=$(gh pr view --json number -q .number)
+          WHICH_COMMIT=$(git rev-parse --short HEAD)
+          export GHCR_IMG_TAG=${WHICH_PR}.${WHICH_COMMIT}
           echo "End"
-      #- name: upload artifact
-      #  uses: actions/upload-artifact@v4
-      #  with:
-      #    path: ./some_file.txt
+      - name: build operator
+        run: |
+          echo "check var start"
+          echo "ghcr img tag is: ${GHCR_IMG_TAG}"
+          echo "check var end"
       #- name: build operator
       #  run: |
       #    docker build -t ghcr.io/portersrc/operator:not-the-latest .
