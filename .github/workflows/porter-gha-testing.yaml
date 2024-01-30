@@ -14,25 +14,20 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Basic echo and docker version
+      - name: Construct tag for operator container image
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
-          echo "Start"
           WHICH_PR=$(gh pr view --json number -q .number)
           WHICH_COMMIT=$(git rev-parse --short HEAD)
-          GHCR_IMG_TAG=${WHICH_PR}.${WHICH_COMMIT}
-          echo "my ghcr img tag is: ${GHCR_IMG_TAG}"
+          GHCR_IMG_TAG="PR${WHICH_PR}-${WHICH_COMMIT}"
           echo "GHCR_IMG_TAG=${GHCR_IMG_TAG}" >> $GITHUB_ENV
-          echo "End"
+      - name: Sanity check tag
+        run: |
+          echo "ghcr img tag is: ${GHCR_IMG_TAG}"
       - name: build operator
         run: |
-          echo "check var start"
-          echo "ghcr img tag is: ${GHCR_IMG_TAG}"
-          echo "check var end"
-      #- name: build operator
-      #  run: |
-      #    docker build -t ghcr.io/portersrc/operator:not-the-latest .
-      #- name: push operator
-      #  run: |
-      #    docker push ghcr.io/portersrc/operator:not-the-latest
+          docker build -t ghcr.io/portersrc/operator:${GHCR_IMG_TAG} .
+      - name: push operator
+        run: |
+          docker push ghcr.io/portersrc/operator:${GHCR_IMG_TAG}
