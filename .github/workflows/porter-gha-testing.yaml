@@ -1,8 +1,6 @@
 name: Porter GHA Testing
 run-name: ${{ github.actor }} is doing the porter GHA testing
 on: [push]
-env:
-  PR_NUMBER: ${{ github.event.number }}
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -23,10 +21,10 @@ jobs:
           echo "Start"
           docker --version
           touch some_file.txt
-          echo "github event number: ${PR_NUMBER}"
-          echo "the problem is push event: $(gh pr view --json number -q .number)"
-          echo "show me ref: ${{ github.head_ref }}"
-          echo "show me sha: ${{ github.sha }}"
+          echo "github client for PR nubmer: $(gh pr view --json number -q .number)"
+          echo "git for short sha: $(git rev-parse --short HEAD)"
+          #echo "show me ref: ${{ github.head_ref }}"
+          #echo "show me sha: ${{ github.sha }}"
           echo "End"
       #- name: upload artifact
       #  uses: actions/upload-artifact@v4
