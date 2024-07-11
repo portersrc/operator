@@ -3,10 +3,8 @@ on:
   pull_request:
     branches:
       - main
-
 permissions:
   contents: read
-
 jobs:
   gofmt:
     name: gofmt
@@ -18,6 +16,6 @@ jobs:
           go-version-file: go.mod
           check-latest: true
       - name: gofmt
-        run : |
+        run: |
           gofmt -s -w .
           git diff --exit-code

@@ -8,21 +8,21 @@ kind: ClusterRole
 metadata:
   name: caa-role
 rules:
-- apiGroups: [""]
-  resources: ["pods", "pods/finalizers"]
-  verbs: ["get","create", "patch", "update"]
-- apiGroups: ["confidentialcontainers.org"]
-  resources: ["peerpods", "pods"]
-  verbs: ["create", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods", "pods/finalizers"]
+    verbs: ["get", "create", "patch", "update"]
+  - apiGroups: ["confidentialcontainers.org"]
+    resources: ["peerpods", "pods"]
+    verbs: ["create", "patch", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: caa-rolebinding
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: confidential-containers-system
+  - kind: ServiceAccount
+    name: default
+    namespace: confidential-containers-system
 roleRef:
   kind: ClusterRole
   name: caa-role

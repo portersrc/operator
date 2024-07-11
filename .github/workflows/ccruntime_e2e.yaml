@@ -9,10 +9,8 @@ on:
       commit-hash:
         required: true
         type: string
-
 permissions:
   contents: read
-
 jobs:
   e2e:
     name: operator tests
@@ -36,23 +34,19 @@ jobs:
           if [ -f ${HOME}/script/pre_action.sh ]; then
             ${HOME}/script/pre_action.sh cc-operator
           fi
-
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.commit-hash }}
           fetch-depth: 0
-
       - name: Rebase atop of the latest target branch
         run: |
           ./tests/git-helper.sh "rebase-atop-of-the-latest-target-branch"
         env:
           TARGET_BRANCH: ${{ inputs.target-branch }}
-
       - name: Install deps
         run: |
           sudo apt-get update -y
           sudo apt-get install -y ansible python-is-python3
-
       - name: Run e2e tests
         timeout-minutes: 45
         run: |
@@ -65,7 +59,6 @@ jobs:
           ./run-local.sh -t -r "${{ matrix.runtimeclass }}" "${args}"
         env:
           RUNNING_INSTANCE: ${{ matrix.instance }}
-
       - name: Take a post-action
         if: always()
         run: |

@@ -4,17 +4,17 @@ kind: ClusterRole
 metadata:
   name: ccruntime-viewer-role
 rules:
-- apiGroups:
-  - confidentialcontainers.org
-  resources:
-  - ccruntimes
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - confidentialcontainers.org
-  resources:
-  - ccruntimes/status
-  verbs:
-  - get
+  - apiGroups:
+      - confidentialcontainers.org
+    resources:
+      - ccruntimes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - confidentialcontainers.org
+    resources:
+      - ccruntimes/status
+    verbs:
+      - get

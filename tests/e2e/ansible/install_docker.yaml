@@ -52,7 +52,7 @@
       group:
         name: docker
         state: present
-      # TODO: add regular non-root users to docker group
+        # TODO: add regular non-root users to docker group
   when: docker_exist.rc != 0 and ansible_distribution == "Ubuntu" and ansible_distribution_version == "20.04"
 - name: Handle docker installation on Ubuntu 22.04
   block:

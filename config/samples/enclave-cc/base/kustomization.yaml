@@ -1,5 +1,4 @@
 resources:
-- ccruntime-enclave-cc.yaml
-
+  - ccruntime-enclave-cc.yaml
 configurations:
-- kustomizeconfig.yaml
+  - kustomizeconfig.yaml

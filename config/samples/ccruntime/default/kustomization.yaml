@@ -2,40 +2,40 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 nameSuffix: -sample
 resources:
-    - ../base
+  - ../base
 images:
-    - name: quay.io/confidential-containers/reqs-payload
-      newTag: anewhash
-    - name: quay.io/kata-containers/kata-deploy
-      newTag: "2"
+  - name: quay.io/confidential-containers/reqs-payload
+    newTag: anewhash
+  - name: quay.io/kata-containers/kata-deploy
+    newTag: "2"
 patches:
-    - patch: |-
-        - op: replace
-          path: /spec/config/runtimeClasses
-          value:
-          - name: "kata-clh"
-            snapshotter: "nydus"
-          - name: "kata-qemu"
-            snapshotter: "nydus"
-          - name: "kata-qemu-tdx"
-            snapshotter: "nydus"
-          - name: "kata-qemu-sev"
-            snapshotter: "nydus"
-          - name: "kata-qemu-snp"
-            snapshotter: "nydus"
-        - op: add
-          path: /spec/config/defaultRuntimeClassName
-          value: "kata-qemu"
-        - op: add
-          path: /spec/config/debug
-          value: false
-        - op: add
-          path: /spec/config/environmentVariables
-          value:
-            # It means that we're relying on the cluster to already have
-            # containerd v1.7+ running.  If you know for sure that's not
-            # the case, please, set this variable to `true`
-            - name: "INSTALL_OFFICIAL_CONTAINERD"
-              value: "false"
-      target:
-        kind: CcRuntime
+  - patch: |-
+      - op: replace
+        path: /spec/config/runtimeClasses
+        value:
+        - name: "kata-clh"
+          snapshotter: "nydus"
+        - name: "kata-qemu"
+          snapshotter: "nydus"
+        - name: "kata-qemu-tdx"
+          snapshotter: "nydus"
+        - name: "kata-qemu-sev"
+          snapshotter: "nydus"
+        - name: "kata-qemu-snp"
+          snapshotter: "nydus"
+      - op: add
+        path: /spec/config/defaultRuntimeClassName
+        value: "kata-qemu"
+      - op: add
+        path: /spec/config/debug
+        value: false
+      - op: add
+        path: /spec/config/environmentVariables
+        value:
+          # It means that we're relying on the cluster to already have
+          # containerd v1.7+ running.  If you know for sure that's not
+          # the case, please, set this variable to `true`
+          - name: "INSTALL_OFFICIAL_CONTAINERD"
+            value: "false"
+    target:
+      kind: CcRuntime

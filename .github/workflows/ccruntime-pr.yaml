@@ -10,7 +10,6 @@ on:
       - labeled
     paths-ignore:
       - 'docs/**'
-
 jobs:
   e2e-pr:
     if: ${{ contains(github.event.pull_request.labels.*.name, 'ok-to-test') }}

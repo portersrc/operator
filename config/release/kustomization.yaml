@@ -1,7 +1,6 @@
 resources:
-- ../default
-
+  - ../default
 # newTag points to the latest release image and must be updated before tagging a new release
 images:
-- name: quay.io/confidential-containers/operator
-  newTag: v0.8.0
+  - name: quay.io/confidential-containers/operator
+    newTag: v0.8.0

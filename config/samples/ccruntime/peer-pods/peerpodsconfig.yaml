@@ -5,5 +5,5 @@ metadata:
   namespace: confidential-containers-system
 spec:
   cloudSecretName: "peer-pods-secret"
-  configMapName:   "peer-pods-cm"
+  configMapName: "peer-pods-cm"
   limit: "1"

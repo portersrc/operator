@@ -1,36 +1,26 @@
 name: Makefile CI
-
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
+    branches: [main]
 jobs:
   build:
-
     runs-on: ubuntu-22.04
-
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version-file: go.mod
-        check-latest: true
-
-    - name: Download controller-gen
-      run: make controller-gen
-
-    - name: Download kustomize
-      run: make kustomize
-
-    - name: Download envtest
-      run: make envtest
-
-    - name: Build controller
-      run: make build
-
-    - name: Build bundle
-      run: make bundle IMG=quay.io/confidential-containers/operator:latest
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          check-latest: true
+      - name: Download controller-gen
+        run: make controller-gen
+      - name: Download kustomize
+        run: make kustomize
+      - name: Download envtest
+        run: make envtest
+      - name: Build controller
+        run: make build
+      - name: Build bundle
+        run: make bundle IMG=quay.io/confidential-containers/operator:latest

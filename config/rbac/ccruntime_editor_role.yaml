@@ -4,21 +4,21 @@ kind: ClusterRole
 metadata:
   name: ccruntime-editor-role
 rules:
-- apiGroups:
-  - confidentialcontainers.org
-  resources:
-  - ccruntimes
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - confidentialcontainers.org
-  resources:
-  - ccruntimes/status
-  verbs:
-  - get
+  - apiGroups:
+      - confidentialcontainers.org
+    resources:
+      - ccruntimes
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - confidentialcontainers.org
+    resources:
+      - ccruntimes/status
+    verbs:
+      - get

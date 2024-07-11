@@ -166,4 +166,4 @@
           file:
             path: "{{ cni_home }}"
             state: absent
-        # TODO: what to do with swap?
+      # TODO: what to do with swap?
