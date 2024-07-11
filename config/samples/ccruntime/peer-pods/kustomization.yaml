@@ -6,9 +6,9 @@ resources:
     - peerpodsconfig.yaml
 images:
     - name: quay.io/confidential-containers/reqs-payload
-      newTag: 13285e0a2e6edf326dd9f6f8de4bf8a743ba6b04
+      newTag: anewhash
     - name: quay.io/kata-containers/kata-deploy
-      newTag: "1"
+      newTag: "2"
 patches:
     - patch: |-
         - op: replace

@@ -5,4 +5,4 @@ resources:
 nameSuffix: -sgx-mode-hw
 images:
     - name: quay.io/confidential-containers/reqs-payload
-      newTag: 13285e0a2e6edf326dd9f6f8de4bf8a743ba6b04
+      newTag: anewhash
