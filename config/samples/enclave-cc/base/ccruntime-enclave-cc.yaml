@@ -44,8 +44,8 @@ spec:
     uninstallCmd: ["/opt/enclave-cc-artifacts/scripts/enclave-cc-deploy.sh", "cleanup"]
     cleanupCmd: ["/opt/enclave-cc-artifacts/scripts/enclave-cc-deploy.sh", "reset"]
     runtimeClasses:
-    - name: "enclave-cc"
-      snapshotter: "overlayfs"
+      - name: "enclave-cc"
+        snapshotter: "overlayfs"
     postUninstall:
       image: quay.io/confidential-containers/reqs-payload
       volumeMounts:
