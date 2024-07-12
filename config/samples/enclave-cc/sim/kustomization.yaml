@@ -1,8 +1,8 @@
 resources:
-  - ../base
+    - ../base
 nameSuffix: -sgx-mode-sim
 images:
-  - name: quay.io/confidential-containers/runtime-payload
-    newTag: enclave-cc-SIM-sample-kbc-v0.8.0
-  - name: quay.io/confidential-containers/reqs-payload
-    newTag: latest
+    - name: quay.io/confidential-containers/runtime-payload
+      newTag: enclave-cc-SIM-sample-kbc-
+    - name: quay.io/confidential-containers/reqs-payload
+      newTag: anewhash3

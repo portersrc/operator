@@ -2,31 +2,30 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 nameSuffix: -peer-pods
 resources:
-  - ../base
-  - peerpodsconfig.yaml
+    - ../base
+    - peerpodsconfig.yaml
 images:
-  - name: quay.io/confidential-containers/reqs-payload
-    newTag: latest
-  - name: quay.io/kata-containers/kata-deploy
-    newName: quay.io/kata-containers/kata-deploy-ci
-    newTag: kata-containers-latest
+    - name: quay.io/confidential-containers/reqs-payload
+      newTag: anewhash3
+    - name: quay.io/kata-containers/kata-deploy
+      newTag: ""
 patches:
-  - patch: |-
-      - op: replace
-        path: /spec/config/runtimeClasses
-        value:
-        - name: "kata-remote"
-          snapshotter: "nydus"
-      - op: add
-        path: /spec/config/debug
-        value: false
-      - op: add
-        path: /spec/config/environmentVariables
-        value:
-          # It means that we're relying on the cluster to already have
-          # containerd v1.7+ running.  If you know for sure that's not
-          # the case, please, set this variable to `true`
-          - name: "INSTALL_OFFICIAL_CONTAINERD"
-            value: "false"
-    target:
-      kind: CcRuntime
+    - patch: |-
+        - op: replace
+          path: /spec/config/runtimeClasses
+          value:
+          - name: "kata-remote"
+            snapshotter: "nydus"
+        - op: add
+          path: /spec/config/debug
+          value: false
+        - op: add
+          path: /spec/config/environmentVariables
+          value:
+            # It means that we're relying on the cluster to already have
+            # containerd v1.7+ running.  If you know for sure that's not
+            # the case, please, set this variable to `true`
+            - name: "INSTALL_OFFICIAL_CONTAINERD"
+              value: "false"
+      target:
+        kind: CcRuntime
