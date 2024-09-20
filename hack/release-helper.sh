@@ -156,8 +156,10 @@ function update_operator() {
 #
 function update_prereqs() {
     # latest
-    prereqs_latest_hash="$(git log -1 --pretty=format:"%H" \
-                           install/pre-install-payload/)"
+    branch=HEAD
+    commit="$(git log -1 --pretty=format:"%H" \
+              install/pre-install-payload/)"
+    prereqs_latest_hash=$((git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2)
 
     echo "Updating pre-reqs payload to $prereqs_latest_hash"
 
