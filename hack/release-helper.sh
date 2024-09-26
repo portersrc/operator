@@ -155,7 +155,8 @@ function update_operator() {
 # Update the CRDs to point to the most recent version of the pre-reqs payload.
 #
 function update_prereqs() {
-    # latest
+    # grab the hash for the latest commit on the pre-install-payload folder
+    # in github (which requires figuring out the hash of the merge)
     branch=HEAD
     commit="$(git log -1 --pretty=format:"%H" \
               install/pre-install-payload/)"
