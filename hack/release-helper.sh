@@ -48,12 +48,12 @@ function usage_and_exit() {
     echo "      Example: v0.9.0"
     echo "  -e  The enclave-cc tag for your release"
     echo "      Example: v0.9.1"
-    echo "  -k  The kata tag for your release" 
-    echo "      Example: v3.6.0"
+    echo "  -k  The kata tag for your release (n.b. no 'v' prefix)"
+    echo "      Example: 3.6.0"
     echo
     echo "Example usage:"
     echo "    $0 check"
-    echo "    $0 update -o v0.9.0 -e v0.9.1 -k v3.6.0"
+    echo "    $0 update -o v0.9.0 -e v0.9.1 -k 3.6.0"
     echo
     exit 1
 }
