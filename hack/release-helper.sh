@@ -90,7 +90,7 @@ function parse_args() {
                 usage_and_exit ;;
         esac
     done
-    
+
     # minimal checking: ensure all args are provided when using 'update'
     if [ ${action} = "update" ]; then
         if [[ ! -v operator_tag ]] || [[ ! -v enclave_cc_tag ]] || [[ ! -v kata_tag ]]; then
